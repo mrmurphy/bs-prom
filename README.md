@@ -36,9 +36,9 @@ getNumberOfFishes()
 ->map(fishesCount => fishesCount * 5);
 ```
 
-## Prom.flatMap
+## Prom.flatMap or Prom.andThen
 
-"flatMap" is another term for Javascript's `.then` function on a promise. While
+"flatMap" (aka "andThen") is another term for Javascript's `.then` function on a promise. While
 "map" changes a value inside a promise, "flatMap" lets you chain promises together,
 ultimately ending up with just one promise, and potentially changing the value
 along the way.

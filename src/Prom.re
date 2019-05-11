@@ -20,6 +20,8 @@ let flatMap =
     (p: Js.Promise.t('a), mapper: 'a => Js.Promise.t('b)): Js.Promise.t('b) =>
   p |> Js.Promise.then_(v => mapper(v));
 
+let andThen = flatMap;
+
 let catch =
     (p: Js.Promise.t('a), mapper: Js.Promise.error => Js.Promise.t('a))
     : Js.Promise.t('a) =>
