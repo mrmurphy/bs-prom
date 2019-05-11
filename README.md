@@ -1,7 +1,6 @@
 # Prom
 
-A very simple module with a collection of functions for working with Javascript
-promises (`Js.Promise`) in ReasonML.
+A simple collection of functions for working with Javascript promises (`Js.Promise`) in ReasonML.
 
 # API
 
