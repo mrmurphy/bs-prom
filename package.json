@@ -11,5 +11,7 @@
   ],
   "author": "Murphy Randle",
   "license": "MIT",
-  "devDependencies": {}
+  "devDependencies": {
+    "bs-platform": "^5.0.4"
+  }
 }
