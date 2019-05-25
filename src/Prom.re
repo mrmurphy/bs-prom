@@ -1,3 +1,6 @@
+type prom('a) = Js.Promise.t('a);
+type promise('a) = prom('a);
+
 // Use this function to turn a callback into a promise.
 // Call it to get back a tuple of (p, re).
 // You can use the "p", which is a promise, as the return value of your function,
