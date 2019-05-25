@@ -87,7 +87,7 @@ module Result = {
     p->map(
       fun
       | Belt.Result.Ok(_) as r => r
-      | Belt.Result.Error(_) as r => Belt.Result.map(r, mapper),
+      | Belt.Result.Error(e) => Belt.Result.Error(mapper(e)),
     );
   };
 
