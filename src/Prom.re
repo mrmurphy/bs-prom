@@ -8,12 +8,14 @@ type promise('a) = prom('a);
 // your callback.
 let make = () => {
   let resolver = ref(ignore);
+  let rejecter = ref(ignore);
   let p =
-    Js.Promise.make((~resolve, ~reject as _) =>
-      resolver := (a => resolve(. a))
-    );
+    Js.Promise.make((~resolve, ~reject) => {
+      resolver := (a => resolve(. a));
+      rejecter := (a => reject(. a));
+    });
 
-  (p, resolver^);
+  (p, resolver^, rejecter^);
 };
 
 let map = (p: Js.Promise.t('a), mapper: 'a => 'b): Js.Promise.t('b) =>
@@ -29,6 +31,19 @@ let catch =
     (p: Js.Promise.t('a), mapper: Js.Promise.error => Js.Promise.t('a))
     : Js.Promise.t('a) =>
   p |> Js.Promise.catch(mapper);
+
+// Logs the value with which the promise was rejected, and then returns a promise
+// that's rejected with "null".
+let logOnRejection =
+    (p: Js.Promise.t('a), logger: Js.Promise.error => unit)
+    : Js.Promise.t('a) => {
+  p->catch(err => {
+    logger(err);
+    let (p, _, reject) = make();
+    reject(Obj.magic(Js.Null.empty));
+    p;
+  });
+};
 
 let wrap: 'a => Js.Promise.t('a) = Js.Promise.resolve;
 
@@ -104,6 +119,7 @@ include Result;
 module Infix = {
   let (<$>) = map;
   let (>>=) = flatMap;
+  let (<!>) = logOnRejection;
   let (<$$>) = mapOk;
   let (<!!>) = mapError;
   let ($$>=) = flatMapOk;
