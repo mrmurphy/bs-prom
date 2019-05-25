@@ -38,3 +38,5 @@ let wait = (p: Js.Promise.t('a), waiter: 'a => unit): Js.Promise.t(unit) =>
   p->map(v => waiter(v));
 
 let all: array(Js.Promise.t('a)) => Js.Promise.t(array('a)) = Js.Promise.all;
+
+let let_ = flatMap;
